@@ -1,4 +1,4 @@
-package com.orangeHRM.actionDriver;
+package com.orangehrm.actionDriver;
 
 public class ActionDriver {
     public static void main(String[] args) {
