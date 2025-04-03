@@ -9,6 +9,6 @@ public class DummyClass extends BaseClass {
         String title = driver.getTitle();
 
       assert title.equals("OrangeHRM") : "Test failed : Title is not mathching with 'OrangeHRM'" ;
-        System.out.println("Test is passed");
+        System.out.println("Test is passed and title is " + title);
     }
 }
