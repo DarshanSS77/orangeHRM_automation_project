@@ -6,26 +6,45 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
 
 public class BaseClass {
-    protected Properties prop;
-    protected WebDriver driver;
+    protected static Properties prop;
+    protected static    WebDriver driver;
 
-    @BeforeMethod
-    public void setup() throws IOException {
+    @BeforeSuite
+    public void loadConfig() throws IOException {
         //Load the configuration file
 
         prop = new Properties();
         FileInputStream fis = new FileInputStream("src/main/java/resources/config.properties");
         prop.load(fis);
 
+    }
+
+    @BeforeMethod
+    public void setup() throws IOException {
+        System.out.println("Setting up WebDriver for : " + this.getClass().getSimpleName());
+        launchBrowser();
+        configureBrowser();
+        staticWait(2);
+
+    }
+
+    //initialize the Webdriver based on browser defined in config.property file
+
+    private void launchBrowser() {
         //Initialize the browser based on browser defined in config.properties file
+
         String browser = prop.getProperty("browser");
         if (browser.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
@@ -39,7 +58,10 @@ public class BaseClass {
         } else {
             throw new IllegalArgumentException("Browser not supported " + browser);
         }
+    }
 
+    //configure the brwoser settings such as implicit wait , maximize the browser and navigate to url
+    private void configureBrowser() {
         //Implicit wait
         int implicitWait = Integer.parseInt(prop.getProperty("implicitWait"));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWait));
@@ -48,14 +70,30 @@ public class BaseClass {
         driver.manage().window().maximize();
 
         //Navigate to url
-        driver.get(prop.getProperty("url"));
+        try {
+            driver.get(prop.getProperty("url"));
+        } catch (Exception e) {
+            System.out.println("Failed to navigate to the url " + e.getMessage());
+            throw new RuntimeException(e);
+
+        }
     }
+
 
     @AfterMethod
     public void tearDown() {
         if (driver != null) {
-            driver.quit();
+            try {
+                driver.quit();
+            } catch (Exception e) {
+                System.out.println("Unable to quit the driver " + e.getMessage());
+            }
         }
+    }
+
+    //static wait for pause
+    public void staticWait(int seconds) {
+        LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(seconds));
     }
 
 

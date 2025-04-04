@@ -1,3 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<text xmlns="http://www.w3.org/1999/XSL/Transform"> </text>
+<suite name="orangeHRMSuite">
+    <test name="orangeHRMTest">
+        <classes>
+            <class name="com.orangehrm.test.DummyClass"></class>
+            <class name="com.orangehrm.test.DummyClass2"></class>
+
+        </classes>
+    </test>
+
+    <test name="orangeHRMTest1">
+        <classes>
+            <class name="com.orangehrm.test.DummyClass"></class>
+            <class name="com.orangehrm.test.DummyClass2"></class>
+
+        </classes>
+    </test>
+</suite>
