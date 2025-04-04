@@ -19,7 +19,7 @@ import java.util.concurrent.locks.LockSupport;
 
 public class BaseClass {
     protected static Properties prop;
-    protected static    WebDriver driver;
+    protected static WebDriver driver;
 
     @BeforeSuite
     public void loadConfig() throws IOException {
@@ -89,6 +89,16 @@ public class BaseClass {
                 System.out.println("Unable to quit the driver " + e.getMessage());
             }
         }
+    }
+
+    //Driver getter method
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    //setting driver
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
     }
 
     //static wait for pause
