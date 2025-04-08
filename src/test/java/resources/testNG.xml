@@ -3,17 +3,12 @@
 <suite name="orangeHRMSuite">
     <test name="orangeHRMTest">
         <classes>
-            <class name="com.orangehrm.test.DummyClass"></class>
-            <class name="com.orangehrm.test.DummyClass2"></class>
+<!--            <class name="com.orangehrm.test.DummyClass"></class>-->
+<!--            <class name="com.orangehrm.test.DummyClass2"></class>-->
+            <class name="com.orangehrm.test.LoginPageTest"></class>
+
 
         </classes>
     </test>
 
-    <test name="orangeHRMTest1">
-        <classes>
-            <class name="com.orangehrm.test.DummyClass"></class>
-            <class name="com.orangehrm.test.DummyClass2"></class>
-
-        </classes>
-    </test>
 </suite>

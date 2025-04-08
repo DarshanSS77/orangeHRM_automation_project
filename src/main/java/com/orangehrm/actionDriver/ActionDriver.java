@@ -1,5 +1,6 @@
 package com.orangehrm.actionDriver;
 
+import com.orangehrm.base.BaseClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +16,8 @@ public class ActionDriver {
 
     public ActionDriver(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        int explicitWait = Integer.parseInt(BaseClass.getProp().getProperty("explicitWait"));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(explicitWait ));
     }
 
     //Method to click an element
@@ -34,8 +36,9 @@ public class ActionDriver {
     public void enterText(By by, String value) {
         try {
             waitForElementToBeVisible(by);
-            driver.findElement(by).clear();
-            driver.findElement(by).sendKeys(value);
+            WebElement element = driver.findElement(by);
+            element.clear();
+            element.sendKeys(value);
         } catch (Exception e) {
             System.out.println("Unable to enter value " + e.getMessage());
         }
@@ -71,24 +74,38 @@ public class ActionDriver {
 
     }
 
-    //Method to check if elements are displayed
-    public boolean isElementDisplayed(By by) {
+    /*
+        //Method to check if elements are displayed
+        public boolean isElementDisplayed(By by) {
+            try {
+                waitForElementToBeVisible(by);
+                boolean isDisplayed = driver.findElement(by).isDisplayed();
+
+                if (isDisplayed) {
+                    System.out.println("Element is visible");
+                    return isDisplayed;
+                } else {
+                    System.out.println("Element is not visible");
+                    return isDisplayed;
+                }
+            } catch (Exception e) {
+                System.out.println("Element is not displayed " + e.getMessage());
+                return false;
+            }
+
+        }
+
+        */
+//Simplified method and remove redundent condition
+    public boolean isDisplayed(By by) {
         try {
             waitForElementToBeVisible(by);
-            boolean isDisplayed = driver.findElement(by).isDisplayed();
-
-            if (isDisplayed) {
-                System.out.println("Element is visible");
-                return isDisplayed;
-            } else {
-                System.out.println("Element is not visible");
-                return isDisplayed;
-            }
+            return driver.findElement(by).isDisplayed();
         } catch (Exception e) {
             System.out.println("Element is not displayed " + e.getMessage());
             return false;
-        }
 
+        }
     }
 
     //Scroll to element
@@ -96,9 +113,9 @@ public class ActionDriver {
         try {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             WebElement element = driver.findElement(by);
-            js.executeScript("argument[0], scrollIntoView(true)", element);
+            js.executeScript("argument[0], scrollIntoView(true);", element);
         } catch (Exception e) {
-            System.out.println("Unable to locate the element "+ e.getMessage());
+            System.out.println("Unable to locate the element " + e.getMessage());
         }
     }
 

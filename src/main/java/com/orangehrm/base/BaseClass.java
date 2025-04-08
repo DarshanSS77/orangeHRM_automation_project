@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeSuite;
 
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
@@ -89,6 +88,11 @@ public class BaseClass {
                 System.out.println("Unable to quit the driver " + e.getMessage());
             }
         }
+    }
+
+    //Getter method for Prop
+    public static Properties getProp() {
+        return prop;
     }
 
     //Driver getter method
