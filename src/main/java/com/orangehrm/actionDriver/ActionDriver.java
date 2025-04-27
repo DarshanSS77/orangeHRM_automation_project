@@ -17,7 +17,7 @@ public class ActionDriver {
     public ActionDriver(WebDriver driver) {
         this.driver = driver;
         int explicitWait = Integer.parseInt(BaseClass.getProp().getProperty("explicitWait"));
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(explicitWait ));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(explicitWait));
     }
 
     //Method to click an element
@@ -55,16 +55,18 @@ public class ActionDriver {
         }
     }
 
-    //Method to compare two text
-    public void compareText(By by, String expectedText) {
+    //Method to compare two text -- changed to boolean
+    public boolean compareText(By by, String expectedText) {
         try {
             waitForElementToBeVisible(by);
             String actualText = driver.findElement(by).getText();
 
             if (expectedText.equals(actualText)) {
                 System.out.println("Text are matching " + actualText + " equals to " + expectedText);
+                return true;
             } else {
                 System.out.println("Text are not matching " + actualText + " not equals to " + expectedText);
+                return false;
 
             }
         } catch (Exception e) {
@@ -72,6 +74,7 @@ public class ActionDriver {
             ;
         }
 
+        return false;
     }
 
     /*

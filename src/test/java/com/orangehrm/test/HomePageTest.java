@@ -7,7 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class LoginPageTest extends BaseClass {
+public class HomePageTest extends BaseClass {
 
     private LoginPage loginPage;
     private HomePage homePage;
@@ -19,20 +19,10 @@ public class LoginPageTest extends BaseClass {
     }
 
     @Test
-    public void verifyValidloginTest() {
+    public void verifyOrangeHRMLogo() {
         loginPage.login("Admin", "admin123");
-        Assert.assertTrue(homePage.isAdminTabVisible(), "Admin tab should be visible after successful login");
-        homePage.logout();
 
-        staticWait(2);
+        Assert.assertTrue(homePage.verifyOrangeHRMLogo(), "Logo is not visible");
+
     }
-
-    @Test
-    public void verifyInvalidlogin() {
-        loginPage.login("Admin", "admin");
-        String expectedtext = "Invalid credentials";
-
-        Assert.assertTrue(loginPage.verifyErrorMessage(expectedtext), "Test failed : Invalid error message");
-    }
-
 }

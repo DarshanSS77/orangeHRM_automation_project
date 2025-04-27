@@ -36,8 +36,8 @@ public class LoginPage {
         return actionDriver.getText(errorMessage);
     }
 
-    //verify if error message is correct or not
-    public void verifyErrorMessage(String expectedError) {
-        actionDriver.compareText(errorMessage, expectedError);
+    //verify if error message is correct or not --
+    public boolean verifyErrorMessage(String expectedError) {
+        return actionDriver.compareText(errorMessage, expectedError);
     }
 }
